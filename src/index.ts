@@ -36,7 +36,7 @@ async function main() {
             console.log(`"${nextWord.word}"   Est. Steps: ${nextWord.steps.toFixed(2)}   Information: ${nextWord.information.toFixed(2)}   Probability: ${nextWord.probability.toFixed(4)}`);
         }
 
-        nextWord = await getUserInput("Enter the next word to guess: ");
+        nextWord = await getUserInput("Enter the next word to guess (Enter nothing to select the best one): ") || nextWords[0]!.word;
 
         feedback = await getUserInput("Enter the feedback (g=green, y=yellow, w=white): ");
 
