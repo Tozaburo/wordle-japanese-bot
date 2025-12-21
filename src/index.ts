@@ -41,8 +41,8 @@ async function main() {
         feedback = await getUserInput("Enter the feedback (g=green, y=yellow, w=white): ");
 
         // Validate feedback
-        if (!/^[gyw]{5}$/.test(feedback)) {
-            console.log("Invalid feedback format. Please enter a string of 5 characters using only 'g', 'y', or 'w'.");
+        if (!new RegExp(`^[gyw]{${nextWord.length}}$`).test(feedback)) {
+            console.log(`Invalid feedback format. Please enter a string of ${nextWord.length} characters using only 'g', 'y', or 'w'.`);
             continue;
         }
 
@@ -77,7 +77,7 @@ function test() {
             candidates = filterWords(candidates, nextWord, feedback);
 
             nextWord = calculateNextWords(candidates, steps, 1, false)[0]!.word;
-        } while (feedback !== "ggggg");
+        } while (!/^g+$/.test(feedback));
 
         if (steps <= 6) {
             data[steps]!++;

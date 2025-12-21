@@ -17,7 +17,7 @@ function isWordValid(word: string, guess: string, feedback: string): boolean {
     const yellowLetters: string[] = [];
     const grayLetters: string[] = [];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < guess.length; i++) {
         const gChar = guess[i]!;
         const fChar = feedback[i]!;
 
@@ -40,7 +40,7 @@ function isWordValid(word: string, guess: string, feedback: string): boolean {
     }
 
     // Check yellow constraints
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < guess.length; i++) {
         const gChar = guess[i]!;
         const fChar = feedback[i]!;
 
