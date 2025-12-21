@@ -25,22 +25,6 @@ async function main() {
     let steps = 0;
     let feedback: string = "";
 
-    console.log("\n---\n");
-
-    console.log("Next:");
-
-    console.log(`"tares"   Est. Steps: 2.83   Information: 6.16   Probability: 0.0001
-"lares"   Est. Steps: 2.84   Information: 6.11   Probability: 0.0001
-"rales"   Est. Steps: 2.84   Information: 6.10   Probability: 0.0001`); // Pre-calculated best words
-
-    nextWord = await getUserInput("Enter the next word to guess: ");
-
-    feedback = await getUserInput("Enter the feedback (g=green, y=yellow, w=white): ");
-
-    steps++;
-
-    candidates = filterWords(candidates, nextWord, feedback);
-
     while (feedback !== "ggggg") {
         console.log("\n---\n");
 
@@ -70,8 +54,7 @@ async function main() {
 
 function test() {
     const iterations = 100;
-    // const initialWord = calculateBestWord(words);
-    const initialWord = "tares"; // Pre-calculated best word
+    const initialWord = calculateBestWord(words);
 
     let data: { [key: string]: number } = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, fail: 0 };
 
