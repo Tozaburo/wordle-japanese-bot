@@ -1,7 +1,7 @@
 import { calculateBestWord } from './calculateBestWord';
 import { calculateInformation } from './calculateInformation';
 import { guess } from './guess';
-import { words } from './words';
+import { answerWords } from './words';
 import { calculateNextWords, type NextWords } from './calculateNextWords';
 
 import * as readline from "node:readline";
@@ -21,7 +21,7 @@ function getUserInput(prompt: string): Promise<string> {
 async function main() {
     let nextWord: string;
     let nextWords: NextWords;
-    let candidates = words;
+    let candidates = answerWords;
     let steps = 0;
     let feedback: string = "";
 
@@ -54,17 +54,17 @@ async function main() {
 
 function test() {
     const iterations = 100;
-    const initialWord = calculateBestWord(words);
+    const initialWord = calculateBestWord(answerWords);
 
     let data: { [key: string]: number } = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, fail: 0 };
 
     for (let i = 0; i < iterations; i++) {
         process.stdout.write(`\r${i}/${iterations} (${((i / iterations) * 100).toFixed(2)}%)`);
 
-        const answer = words[Math.floor(Math.random() * words.length)]!;
+        const answer = answerWords[Math.floor(Math.random() * answerWords.length)]!;
 
         let nextWord: string = initialWord;
-        let candidates = words;
+        let candidates = answerWords;
         let steps = 0;
         let feedback: string = "";
 
