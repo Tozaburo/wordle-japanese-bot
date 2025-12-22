@@ -17,7 +17,7 @@ export function calculateNextWords(filteredWords: string[], steps: number, numbe
 
         const information = calculateInformation(filteredWords, word);
 
-        const estimatedSteps = probability * (steps + 1) + (1 - probability) * (steps + stepsByUncertainty(uncertainty - information));
+        const estimatedSteps = probability * (steps + 1) + (1 - probability) * (steps + 1 + stepsByUncertainty(uncertainty - information));
 
         i++;
         if (showProgress) {
