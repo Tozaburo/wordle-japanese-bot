@@ -1,5 +1,5 @@
 import { calculateInformation } from "./calculateInformation";
-import { validWords } from "./words";
+import { validWords, answerWords } from "./words";
 
 export type NextWords = { word: string, steps: number, information: number, probability: number }[];
 
@@ -8,7 +8,7 @@ export function calculateNextWords(filteredWords: string[], steps: number, numbe
 
     const uncertainty = Math.log2(filteredWords.length);
 
-    const words = [...validWords, ...filteredWords].flat();
+    const words = [...validWords, ...answerWords].flat();
 
     let i = 0;
     for (const word of words) {
