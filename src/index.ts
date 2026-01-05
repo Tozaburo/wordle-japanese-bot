@@ -1,5 +1,4 @@
 import { calculateBestWord } from './calculateBestWord';
-import { calculateInformation } from './calculateInformation';
 import { guess } from './guess';
 import { answerWords } from './words';
 import { calculateNextWords, type NextWords } from './calculateNextWords';
@@ -53,7 +52,7 @@ async function main() {
 }
 
 function test() {
-    const iterations = 100;
+    const iterations = 1000;
     const initialWord = calculateBestWord(answerWords);
 
     let data: { [key: string]: number } = { fail: 0 };
@@ -146,5 +145,5 @@ function drawBlock(width: number, value: number) {
     return result;
 }
 
-main();
-// test();
+// main();
+test();

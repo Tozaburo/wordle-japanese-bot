@@ -1,4 +1,4 @@
-import { calculateInformation } from "./calculateInformation";
+import { guess } from "./guess";
 import { validWords, answerWords } from "./words";
 
 export type NextWords = { word: string, steps: number, information: number, probability: number }[];
@@ -6,18 +6,33 @@ export type NextWords = { word: string, steps: number, information: number, prob
 export function calculateNextWords(filteredWords: string[], steps: number, numberOfCandidates: number, showProgress: boolean = false): NextWords {
     let result: NextWords = [];
 
-    const uncertainty = Math.log2(filteredWords.length);
-
     const words = [...validWords, ...answerWords].flat();
 
     let i = 0;
     for (const word of words) {
-        const probability = filteredWords.includes(word) ? (1 / filteredWords.length) : 0;
+        const outcomeCounts: Record<string, number> = {};
+        const winPattern = "g".repeat(word.length);
 
+        for (const answer of filteredWords) {
+            const pattern = guess(word, answer);
+            outcomeCounts[pattern] = (outcomeCounts[pattern] ?? 0) + 1;
+        }
 
-        const information = calculateInformation(filteredWords, word);
+        const probability = (outcomeCounts[winPattern] ?? 0) / filteredWords.length;
+        let expectedRemainingSteps = 0;
+        let information = 0;
 
-        const estimatedSteps = probability * (steps + 1) + (1 - probability) * (steps + 1 + stepsByUncertainty(uncertainty - information));
+        for (const [pattern, count] of Object.entries(outcomeCounts)) {
+            const p = count / filteredWords.length;
+            information += p * Math.log2(1 / p);
+
+            if (pattern !== winPattern) {
+                const subsetUncertainty = Math.log2(count);
+                expectedRemainingSteps += p * stepsByUncertainty(subsetUncertainty);
+            }
+        }
+
+        const estimatedSteps = steps + 1 + expectedRemainingSteps;
 
         i++;
         if (showProgress) {
